@@ -8,11 +8,11 @@
 const char* WIFI_SSID = "IFPR-IoT";
 const char* WIFI_PASS = "j^SFDRy5v6470kKHD7";
 
-const char* API_BASE = "http://192.168.201.176:42000/api/integ";
+const char* API_BASE = "http://192.168.201.176:3000/api/integ";
 const char* SECRET_KEY = "chave_super_secreta_padrao";  // mesma usada na API
 
 #define SS_PIN 5
-#define RST_PIN 22
+#define RST_PIN 21
 #define ENROLL_BUTTON_PIN 4
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);
@@ -127,7 +127,7 @@ void registrarLeitura(String uid) {
   String uuid = generateUUIDv4();
   long ts = millis();
 
-  String payload = "{\"uuid\":\"" + uuid + "\",\"uid\":\"" + uid + "\",\"timestamp\":" + String(ts) + "}";
+  String payload = "{\"uuid\":\"" + uuid + "\",\"tag_id\":\"" + uid + "\",\"timestamp\":" + String(ts) + "}";
   enviarRequisicao(endpoint, payload);
 }
 
@@ -136,7 +136,7 @@ void cadastrarTag(String uid, String userId) {
   String uuid = generateUUIDv4();
   long ts = millis();
 
-  String payload = "{\"uuid\":\"" + uuid + "\",\"uid\":\"" + uid + "\",\"userId\":\"" + userId + "\",\"timestamp\":" + String(ts) + "}";
+  String payload = "{\"uuid\":\"" + uuid + "\",\"tag_id\":\"" + uid + "\",\"user_id\":\"" + userId + "\",\"timestamp\":" + String(ts) + "}";
   enviarRequisicao(endpoint, payload);
 }
 
