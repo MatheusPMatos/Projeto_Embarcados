@@ -8,7 +8,7 @@
 const char* WIFI_SSID = "IFPR-IoT";
 const char* WIFI_PASS = "j^SFDRy5v6470kKHD7";
 
-const char* API_BASE = "http://192.168.201.176:42000/api";
+const char* API_BASE = "http://192.168.201.176:42000/api/integ";
 const char* SECRET_KEY = "chave_super_secreta_padrao";  // mesma usada na API
 
 #define SS_PIN 5
@@ -62,7 +62,7 @@ String generateUUIDv4() {
 void setup() {
   Serial.begin(115200);
   SPI.begin();
-  //mfrc522.PCD_Init();
+  mfrc522.PCD_Init();
   pinMode(ENROLL_BUTTON_PIN, INPUT_PULLUP);
   esp_random(); // inicializa gerador de aleatórios
 
@@ -118,12 +118,12 @@ void loop() {
   if(uidStr != ""){
     registrarLeitura(uidStr);
   }
-  
+
   mfrc522.PICC_HaltA();
 }
 
 void registrarLeitura(String uid) {
-  String endpoint = String(API_BASE) + "/readings";
+  String endpoint = String(API_BASE) + "/register-event";
   String uuid = generateUUIDv4();
   long ts = millis();
 
@@ -132,7 +132,7 @@ void registrarLeitura(String uid) {
 }
 
 void cadastrarTag(String uid, String userId) {
-  String endpoint = String(API_BASE) + "/users/" + userId + "/tags";
+  String endpoint = String(API_BASE) + "/register-tag";
   String uuid = generateUUIDv4();
   long ts = millis();
 
